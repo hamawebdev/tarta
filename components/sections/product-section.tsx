@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ShoppingCart } from 'lucide-react'
 import Image from 'next/image'
@@ -21,13 +21,7 @@ interface ProductSectionProps {
 }
 
 export function ProductSection({ product, onProductSelect, isLast = false }: ProductSectionProps) {
-  const router = useRouter()
-
-  const handleBuyClick = () => {
-    router.push(`/buy/${product.id}`)
-    onProductSelect?.(product)
-  }
-
+  // Keep the render path free of any async/state work before navigation to ensure instant feel
   return (
     <div className={`h-full w-full bg-gradient-to-br ${product.color} relative overflow-hidden`}>
       {/* Animated Background Pattern */}
@@ -69,14 +63,16 @@ export function ProductSection({ product, onProductSelect, isLast = false }: Pro
         {/* Buy Button positioned below the preview */}
         <div className="animate-in slide-in-from-bottom-8 delay-500">
           <Button
+            asChild
             size="lg"
-            className="bg-white text-gray-900 hover:bg-white/95 px-8 py-6 md:px-12 md:py-7 h-auto text-lg md:text-xl font-bold shadow-2xl rounded-full transform hover:scale-110 transition-all duration-300 hover:shadow-white/20 border-2 border-white/20 backdrop-blur-sm"
-            onClick={handleBuyClick}
+            className="bg-white text-gray-900 hover:bg-white/95 px-8 py-6 md:px-12 md:py-7 h-auto text-lg md:text-xl font-bold shadow-2xl rounded-full border-2 border-white/20 backdrop-blur-sm hover:scale-110 transition-transform"
           >
-            <span className="flex items-center gap-3">
-              <ShoppingCart size={20} />
-              Buy This Flavor
-            </span>
+            <Link href={`/buy/${product.id}`} prefetch>
+              <span className="flex items-center gap-3">
+                <ShoppingCart size={20} />
+                Buy This Flavor
+              </span>
+            </Link>
           </Button>
         </div>
       </div>

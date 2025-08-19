@@ -4,56 +4,11 @@ import { useState, useEffect } from "react";
 import { FullPageCarousel } from "@/components/ui/full-page-carousel";
 import { HeroSection } from "@/components/sections/hero-section";
 import { ProductSection } from "@/components/sections/product-section";
+import { SocialLinksSection } from "@/components/sections/social-links-section";
+import { InstantNavigation } from "@/components/ui/instant-navigation";
 import { useHydration } from "@/hooks/use-hydration";
+import { flavors, type Flavor } from "@/lib/data/flavors";
 import { type UseEmblaCarouselType } from "embla-carousel-react";
-
-// Type definitions
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-  color: string;
-}
-
-// Sample flavor data - using real product images
-const flavors = [
-  {
-    id: 1,
-    name: "Classic Chocolate",
-    description: "Rich, decadent chocolate cake layered with silky chocolate ganache",
-    image: "/products/choco.jpg",
-    color: "from-amber-900 to-amber-700"
-  },
-  {
-    id: 2,
-    name: "Berry Delight",
-    description: "Fresh berry layers with whipped cream and berry compote",
-    image: "/products/berry.png",
-    color: "from-purple-400 to-purple-300"
-  },
-  {
-    id: 3,
-    name: "Strawberry Dream",
-    description: "Fresh strawberry layers with whipped cream and strawberry compote",
-    image: "/products/fraise.png",
-    color: "from-pink-400 to-pink-300"
-  },
-  {
-    id: 4,
-    name: "Mango Bliss",
-    description: "Tropical mango cake with mango cream and fresh mango pieces",
-    image: "/products/mango.png",
-    color: "from-yellow-400 to-orange-300"
-  },
-  {
-    id: 5,
-    name: "Pistachio Dream",
-    description: "Delicate pistachio cake with pistachio cream and crushed pistachios",
-    image: "/products/pistache.png",
-    color: "from-green-400 to-green-300"
-  }
-];
 
 export default function Home() {
   const [carouselApi, setCarouselApi] = useState<UseEmblaCarouselType[1] | null>(null);
@@ -70,7 +25,7 @@ export default function Home() {
     }
   }, [isHydrated]);
 
-  const handleProductSelect = (product: Product) => {
+  const handleProductSelect = (product: Flavor) => {
     // Handle product selection - could navigate to product page, add to cart, etc.
     console.log(`Selected product: ${product.name}`);
   };
@@ -95,13 +50,21 @@ export default function Home() {
         <ProductSection
           product={flavor}
           onProductSelect={handleProductSelect}
-          isLast={index === flavors.length - 1}
+          isLast={false} // No longer the last since we're adding social links
         />
       )
-    }))
+    })),
+    {
+      id: 'social-links',
+      type: 'social' as const,
+      content: <SocialLinksSection />
+    }
   ];
 
   return (
-    <FullPageCarousel sections={sections} setApi={setCarouselApi} />
+    <>
+      <InstantNavigation />
+      <FullPageCarousel sections={sections} setApi={setCarouselApi} />
+    </>
   );
 }

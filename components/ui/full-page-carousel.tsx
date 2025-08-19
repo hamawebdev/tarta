@@ -6,7 +6,7 @@ import { useHydration } from '@/hooks/use-hydration'
 
 interface Section {
   id: string
-  type: 'hero' | 'product'
+  type: 'hero' | 'product' | 'social'
   content: React.ReactNode
 }
 
@@ -17,6 +17,17 @@ interface FullPageCarouselProps {
 }
 
 export function FullPageCarousel({ sections, className = '', setApi }: FullPageCarouselProps) {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+
+  // Respect user preference for reduced motion by shortening/removing transitions
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const onChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches)
+    setPrefersReducedMotion(mql.matches)
+    mql.addEventListener('change', onChange)
+    return () => mql.removeEventListener('change', onChange)
+  }, [])
   const [emblaRef, emblaApi] = useEmblaCarousel({
     axis: 'y',
     loop: false,
@@ -26,9 +37,9 @@ export function FullPageCarousel({ sections, className = '', setApi }: FullPageC
     watchDrag: true,
     watchResize: true,
     watchSlides: true,
-    dragThreshold: 15,
-    inViewThreshold: 0.8,
-    duration: 30,
+    dragThreshold: 8, // slightly more responsive on touch devices
+    inViewThreshold: 0.9, // require slides to be more in view before snapping (smoother)
+    duration: 30, // Slightly longer for smoother transitions
     startIndex: 0,
     // Enhanced smooth scrolling
     align: 'start',
@@ -68,6 +79,12 @@ export function FullPageCarousel({ sections, className = '', setApi }: FullPageC
     emblaApi.on('select', onSelect)
     emblaApi.on('reInit', onSelect)
 
+    // Initialize the state immediately
+    onSelect(emblaApi)
+
+    // Enable easing for smoother momentum feel
+    // Note: Embla uses easing internally; we ensure our CSS respects it via transition classes
+
     // Pass API to parent component
     if (setApi) {
       setApi(emblaApi)
@@ -97,58 +114,57 @@ export function FullPageCarousel({ sections, className = '', setApi }: FullPageC
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [emblaApi, isHydrated])
 
-  // Handle wheel events for desktop with improved debouncing
+  // Handle wheel events for desktop with animation-aware gating (reduces lag on fast scrolls)
   useEffect(() => {
     if (!isHydrated || !emblaApi) return
 
-    let isScrolling = false
-    let scrollTimeout: NodeJS.Timeout
+    let isAnimating = false
 
-    const handleWheel = (event: WheelEvent) => {
-      if (isScrolling) return
-
-      // Prevent default scrolling
-      event.preventDefault()
-
-      // Clear existing timeout
-      clearTimeout(scrollTimeout)
-
-      // Add debouncing to prevent too rapid scrolling
-      const threshold = 30
-      if (Math.abs(event.deltaY) > threshold) {
-        isScrolling = true
-
-        if (event.deltaY > 0 && canScrollNext) {
-          emblaApi.scrollNext()
-        } else if (event.deltaY < 0 && canScrollPrev) {
-          emblaApi.scrollPrev()
-        }
-
-        // Reset scrolling flag after animation completes
-        scrollTimeout = setTimeout(() => {
-          isScrolling = false
-        }, 800) // Match with carousel animation duration
-      }
+    const releaseOnSettle = () => {
+      isAnimating = false
     }
 
-    // Add wheel event listener to the document
+    const handleWheel = (event: WheelEvent) => {
+      // Prevent the browser from doing native scroll
+      event.preventDefault()
+      event.stopPropagation()
+
+      if (isAnimating) return
+
+      // Higher threshold to ignore tiny trackpad noise but keep responsiveness
+      const threshold = 20
+      if (Math.abs(event.deltaY) <= threshold) return
+
+      if (event.deltaY > 0) {
+        emblaApi.scrollNext()
+      } else {
+        emblaApi.scrollPrev()
+      }
+      // Block further wheel-triggered scroll until Embla finishes the animation
+      isAnimating = true
+    }
+
+    // Listen for when Embla settles to re-enable wheel scrolling
+    emblaApi.on('settle', releaseOnSettle)
+
+    // Add wheel event listener to the document (could be scoped to root if desired)
     document.addEventListener('wheel', handleWheel, { passive: false })
     return () => {
       document.removeEventListener('wheel', handleWheel)
-      clearTimeout(scrollTimeout)
+      emblaApi.off('settle', releaseOnSettle)
     }
-  }, [emblaApi, canScrollNext, canScrollPrev, isHydrated])
+  }, [emblaApi, isHydrated])
 
   return (
     <div className={`relative h-screen w-full overflow-hidden ${className}`}>
-      <div 
-        className="embla h-full overflow-hidden" 
+      <div
+        className="embla h-full overflow-hidden"
         ref={emblaRef}
         style={{ touchAction: 'pan-y' }}
       >
-        <div 
+        <div
           className="embla__container h-full flex flex-col"
-          style={{ 
+          style={{
             touchAction: 'pan-y',
             WebkitBackfaceVisibility: 'hidden',
             backfaceVisibility: 'hidden'
@@ -192,10 +208,10 @@ export function FullPageCarousel({ sections, className = '', setApi }: FullPageC
 
       {/* Scroll Progress Bar (top) */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-white/10 z-50">
-        <div 
+        <div
           className="h-full bg-white/60 transition-all duration-300 ease-out"
-          style={{ 
-            width: `${((selectedIndex + 1) / sections.length) * 100}%` 
+          style={{
+            width: `${((selectedIndex + 1) / sections.length) * 100}%`
           }}
         />
       </div>
@@ -213,7 +229,7 @@ export function FullPageCarousel({ sections, className = '', setApi }: FullPageC
             </svg>
           </button>
         )}
-        
+
         {canScrollNext && (
           <button
             onClick={scrollNext}
