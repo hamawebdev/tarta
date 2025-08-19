@@ -43,7 +43,7 @@ export default function Home() {
       type: 'hero' as const,
       content: <HeroSection onScrollToNext={handleScrollToNext} />
     },
-    ...flavors.map((flavor) => ({
+    ...flavors.map((flavor, idx) => ({
       id: `product-${flavor.id}`,
       type: 'product' as const,
       content: (
@@ -51,6 +51,7 @@ export default function Home() {
           product={flavor}
           onProductSelect={handleProductSelect}
           isLast={false} // No longer the last since we're adding social links
+          priority={idx === 0}
         />
       )
     })),

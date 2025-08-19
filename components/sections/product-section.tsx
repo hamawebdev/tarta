@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ShoppingCart } from 'lucide-react'
@@ -14,13 +14,17 @@ interface Product {
   color: string
 }
 
+const TINY_BLUR_DATA_URL = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+
 interface ProductSectionProps {
   product: Product
   onProductSelect?: (product: Product) => void
   isLast?: boolean
+  priority?: boolean
 }
 
-export function ProductSection({ product, isLast = false }: ProductSectionProps) {
+export function ProductSection({ product, isLast = false, priority = false }: ProductSectionProps) {
+  const [imgLoaded, setImgLoaded] = useState(false)
   // Keep the render path free of any async/state work before navigation to ensure instant feel
   return (
     <div className={`h-full w-full bg-gradient-to-br ${product.color} relative overflow-hidden`}>
@@ -46,12 +50,20 @@ export function ProductSection({ product, isLast = false }: ProductSectionProps)
                 alt={product.name}
                 width={384}
                 height={512}
-                className="w-full h-full object-cover"
+                sizes="(min-width: 1024px) 384px, 320px"
+                priority={priority}
+                fetchPriority={priority ? 'high' : 'auto'}
+                loading={priority ? 'eager' : 'lazy'}
+                placeholder="blur"
+                blurDataURL={TINY_BLUR_DATA_URL}
+                className="w-full h-full object-cover transition-opacity duration-300"
+                style={{ opacity: imgLoaded ? 1 : 0 }}
+                onLoadingComplete={() => setImgLoaded(true)}
                 onError={(e) => {
                   // Fallback if image fails to load
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
-                  target.parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center"><span class="text-white font-semibold text-lg tracking-wide">Product Preview</span></div>';
+                  target.parentElement!.innerHTML = '<div class=\"w-full h-full flex items-center justify-center\"><span class=\"text-white font-semibold text-lg tracking-wide\">Product Preview</span></div>';
                 }}
               />
             </div>

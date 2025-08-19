@@ -18,6 +18,7 @@ export function HeroSection({ onScrollToNext }: HeroSectionProps) {
         loop
         playsInline
         preload="auto"
+        poster="/products/choco.webp"
       >
         {/* Single video source */}
         <source src="/hero.mp4" type="video/mp4" />

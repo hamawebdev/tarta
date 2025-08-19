@@ -312,13 +312,13 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
                           <div className="flex items-center space-x-3 p-4 rounded-lg border-2 border-gray-200 hover:border-gray-300 transition-all duration-200 bg-white">
                             <RadioGroupItem value="pickup" id="pickup" className="text-primary border-2 border-gray-300" />
                             <Label htmlFor="pickup" className="text-base font-medium text-gray-900 cursor-pointer flex-1">
-                              Pickup - Free
+                              Pickup
                             </Label>
                           </div>
                           <div className="flex items-center space-x-3 p-4 rounded-lg border-2 border-gray-200 hover:border-gray-300 transition-all duration-200 bg-white">
                             <RadioGroupItem value="delivery" id="delivery" className="text-primary border-2 border-gray-300" />
                             <Label htmlFor="delivery" className="text-base font-medium text-gray-900 cursor-pointer flex-1">
-                              Delivery - $5.00
+                              Delivery
                             </Label>
                           </div>
                         </RadioGroup>

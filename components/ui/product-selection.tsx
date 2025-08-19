@@ -1,6 +1,6 @@
 'use client';
 
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -32,6 +32,11 @@ export const ProductSelectionItem = memo(function ProductSelectionItem({
   onQuantityChange,
   onCardClick
 }: ProductSelectionItemProps) {
+  const [localQty, setLocalQty] = useState(String(quantity ?? ''));
+  useEffect(() => {
+    setLocalQty(String(quantity ?? ''));
+  }, [quantity]);
+
   return (
     <div
       className={`flex items-center space-x-4 p-4 rounded-lg border-2 transition-all duration-200 bg-white cursor-pointer group ${
@@ -88,19 +93,44 @@ export const ProductSelectionItem = memo(function ProductSelectionItem({
         <Input
           id={`quantity-${flavor.id}`}
           type="number"
+          inputMode="numeric"
+          pattern="[0-9]*"
           min={isSelected ? "1" : "0"}
           max="50"
-          value={quantity}
+          step="1"
+          value={localQty}
           onChange={(e) => {
-            const newQuantity = parseInt(e.target.value) || 0;
-            if (newQuantity > 0 && !isSelected) {
-              onToggle(flavor.id, true);
-              onQuantityChange(flavor.id, newQuantity);
-            } else if (isSelected) {
-              onQuantityChange(flavor.id, newQuantity || 1);
+            // Allow free typing, including temporarily empty values
+            const raw = e.target.value.replace(/[^0-9]/g, '');
+            setLocalQty(raw);
+            if (raw !== '') {
+              const n = parseInt(raw, 10);
+              if (n > 0) {
+                if (!isSelected) {
+                  onToggle(flavor.id, true);
+                }
+                onQuantityChange(flavor.id, Math.min(50, n));
+              }
             }
           }}
-          disabled={!isSelected}
+          onBlur={() => {
+            const n = parseInt(localQty, 10);
+            if (!Number.isNaN(n) && n > 0) {
+              const clamped = Math.min(50, n);
+              if (!isSelected) {
+                onToggle(flavor.id, true);
+              }
+              onQuantityChange(flavor.id, clamped);
+              setLocalQty(String(clamped));
+            } else {
+              if (isSelected) {
+                onQuantityChange(flavor.id, 1);
+                setLocalQty('1');
+              } else {
+                setLocalQty('');
+              }
+            }
+          }}
           className={`w-20 text-center transition-all duration-200 !bg-white ${
             isSelected
               ? 'border-primary/30 text-gray-900 focus:border-primary focus:ring-2 focus:ring-primary/20'
