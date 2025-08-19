@@ -20,7 +20,7 @@ interface ProductSectionProps {
   isLast?: boolean
 }
 
-export function ProductSection({ product, onProductSelect, isLast = false }: ProductSectionProps) {
+export function ProductSection({ product, isLast = false }: ProductSectionProps) {
   // Keep the render path free of any async/state work before navigation to ensure instant feel
   return (
     <div className={`h-full w-full bg-gradient-to-br ${product.color} relative overflow-hidden`}>

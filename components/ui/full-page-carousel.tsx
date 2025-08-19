@@ -17,17 +17,6 @@ interface FullPageCarouselProps {
 }
 
 export function FullPageCarousel({ sections, className = '', setApi }: FullPageCarouselProps) {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
-
-  // Respect user preference for reduced motion by shortening/removing transitions
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    const mql = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const onChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches)
-    setPrefersReducedMotion(mql.matches)
-    mql.addEventListener('change', onChange)
-    return () => mql.removeEventListener('change', onChange)
-  }, [])
   const [emblaRef, emblaApi] = useEmblaCarousel({
     axis: 'y',
     loop: false,

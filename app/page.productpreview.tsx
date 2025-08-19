@@ -5,7 +5,7 @@ import { FullPageCarousel } from "@/components/ui/full-page-carousel";
 import { HeroSection } from "@/components/sections/hero-section";
 import { ProductSection } from "@/components/sections/product-section";
 import { type UseEmblaCarouselType } from "embla-carousel-react";
-import { flavors, type Flavor } from "@/lib/data/flavors";
+import { flavors } from "@/lib/data/flavors";
 
 // Type definitions
 interface Product {

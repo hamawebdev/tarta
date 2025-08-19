@@ -43,7 +43,7 @@ export default function Home() {
       type: 'hero' as const,
       content: <HeroSection onScrollToNext={handleScrollToNext} />
     },
-    ...flavors.map((flavor, index) => ({
+    ...flavors.map((flavor) => ({
       id: `product-${flavor.id}`,
       type: 'product' as const,
       content: (

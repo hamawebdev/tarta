@@ -1,0 +1,22 @@
+
+[13:35:46.509] Failed to compile.
+[13:35:46.509] 
+[13:35:46.510] ./app/(public)/page.tsx
+[13:35:46.510] 46:29  Error: 'index' is defined but never used.  @typescript-eslint/no-unused-vars
+[13:35:46.510] 
+[13:35:46.510] ./app/page.productpreview.tsx
+[13:35:46.510] 8:24  Error: 'Flavor' is defined but never used.  @typescript-eslint/no-unused-vars
+[13:35:46.510] 
+[13:35:46.510] ./components/buy/buy-page-client.tsx
+[13:35:46.510] 18:10  Error: 'LoadingSkeleton' is defined but never used.  @typescript-eslint/no-unused-vars
+[13:35:46.510] 21:8  Error: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+[13:35:46.510] 
+[13:35:46.510] ./components/sections/product-section.tsx
+[13:35:46.510] 23:43  Error: 'onProductSelect' is defined but never used.  @typescript-eslint/no-unused-vars
+[13:35:46.510] 
+[13:35:46.511] ./components/ui/full-page-carousel.tsx
+[13:35:46.511] 20:10  Error: 'prefersReducedMotion' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+[13:35:46.511] 
+[13:35:46.511] info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+[13:35:46.565]  ELIFECYCLE  Command failed with exit code 1.
+[13:35:46.588] Error: Command "pnpm run build" exited with 1

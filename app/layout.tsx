@@ -12,6 +12,7 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: "Product Preview",
   description: "Large responsive product previews with buy buttons",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
 };
 
 export default function RootLayout({

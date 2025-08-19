@@ -15,10 +15,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import { flavors, type Flavor } from '@/lib/data/flavors';
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
 
 // Dynamic imports for code splitting
 const ProductSelection = lazy(() => import('@/components/ui/product-selection').then(mod => ({ default: mod.ProductSelection })));

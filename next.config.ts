@@ -16,12 +16,6 @@ const nextConfig: NextConfig = {
   // Enable compression
   compress: true,
 
-  // Optimize for production builds
-  swcMinify: true,
-
-  // Enable static optimization
-  output: 'standalone',
-
   // Optimize bundle splitting
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {

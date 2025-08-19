@@ -12,8 +12,9 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for each product page
-export async function generateMetadata({ params }: { params: { productId: string } }) {
-  const productId = parseInt(params.productId);
+export async function generateMetadata({ params }: { params: Promise<{ productId: string }> }) {
+  const { productId: productIdStr } = await params;
+  const productId = parseInt(productIdStr);
   const product = getFlavorById(productId);
 
   if (!product) {
@@ -35,11 +36,12 @@ export async function generateMetadata({ params }: { params: { productId: string
 }
 
 interface BuyPageProps {
-  params: { productId: string };
+  params: Promise<{ productId: string }>;
 }
 
-export default function BuyPage({ params }: BuyPageProps) {
-  const productId = parseInt(params.productId);
+export default async function BuyPage({ params }: BuyPageProps) {
+  const { productId: productIdStr } = await params;
+  const productId = parseInt(productIdStr);
   const selectedProduct = getFlavorById(productId);
 
   // With static generation, this should rarely happen
