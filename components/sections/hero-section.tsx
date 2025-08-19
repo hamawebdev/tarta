@@ -7,19 +7,30 @@ interface HeroSectionProps {
   onScrollToNext?: () => void
 }
 
+// Type for navigator connection API
+interface NavigatorConnection {
+  effectiveType?: string;
+  downlink?: number;
+  saveData?: boolean;
+}
+
+interface ExtendedNavigator extends Navigator {
+  connection?: NavigatorConnection;
+  mozConnection?: NavigatorConnection;
+  webkitConnection?: NavigatorConnection;
+}
+
 export function HeroSection({ onScrollToNext }: HeroSectionProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [isInView, setIsInView] = useState(false)
   const [hasError, setHasError] = useState(false)
   const [isLowBandwidth, setIsLowBandwidth] = useState(false)
-  const [loadingProgress, setLoadingProgress] = useState(0)
-  const [retryCount, setRetryCount] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
 
   // Detect connection speed and device capabilities
   useEffect(() => {
-    const connection = (navigator as any).connection || (navigator as any).mozConnection || (navigator as any).webkitConnection
+    const extendedNavigator = navigator as ExtendedNavigator;
+    const connection = extendedNavigator.connection || extendedNavigator.mozConnection || extendedNavigator.webkitConnection
     if (connection) {
       const effectiveType = connection.effectiveType
       const downlink = connection.downlink || 0
@@ -38,7 +49,7 @@ export function HeroSection({ onScrollToNext }: HeroSectionProps) {
     }
 
     // Check for data saver mode
-    if ((navigator as any).connection?.saveData) {
+    if (extendedNavigator.connection?.saveData) {
       setIsLowBandwidth(true)
     }
   }, [])

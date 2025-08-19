@@ -4,6 +4,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { ShoppingCart } from 'lucide-react'
+import Image from 'next/image'
 
 interface Product {
   id: number
@@ -46,9 +47,11 @@ export function ProductSection({ product, onProductSelect, isLast = false }: Pro
         <div className="flex-1 flex items-center justify-center mb-2 md:mb-6 animate-in slide-in-from-bottom-4 delay-300">
           <div className="relative">
             <div className="w-80 h-[26rem] sm:w-80 sm:h-[28rem] md:w-80 md:h-[28rem] lg:w-96 lg:h-[32rem] bg-white/10 rounded-3xl backdrop-blur-md border border-white/30 overflow-hidden shadow-2xl transform hover:scale-105 transition-all duration-500 hover:rotate-1">
-              <img
+              <Image
                 src={product.image}
                 alt={product.name}
+                width={384}
+                height={512}
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   // Fallback if image fails to load

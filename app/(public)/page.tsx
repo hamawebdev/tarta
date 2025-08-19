@@ -5,7 +5,16 @@ import { FullPageCarousel } from "@/components/ui/full-page-carousel";
 import { HeroSection } from "@/components/sections/hero-section";
 import { ProductSection } from "@/components/sections/product-section";
 import { useHydration } from "@/hooks/use-hydration";
+import { type UseEmblaCarouselType } from "embla-carousel-react";
 
+// Type definitions
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  color: string;
+}
 
 // Sample flavor data - using real product images
 const flavors = [
@@ -47,7 +56,7 @@ const flavors = [
 ];
 
 export default function Home() {
-  const [carouselApi, setCarouselApi] = useState<any>(null);
+  const [carouselApi, setCarouselApi] = useState<UseEmblaCarouselType[1] | null>(null);
   const isHydrated = useHydration();
 
   // Apply carousel-specific styles to body when this page is mounted
@@ -61,7 +70,7 @@ export default function Home() {
     }
   }, [isHydrated]);
 
-  const handleProductSelect = (product: any) => {
+  const handleProductSelect = (product: Product) => {
     // Handle product selection - could navigate to product page, add to cart, etc.
     console.log(`Selected product: ${product.name}`);
   };

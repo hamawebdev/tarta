@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useCallback, useEffect, useState } from 'react'
-import useEmblaCarousel from 'embla-carousel-react'
+import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react'
 import { useHydration } from '@/hooks/use-hydration'
 
 interface Section {
@@ -13,7 +13,7 @@ interface Section {
 interface FullPageCarouselProps {
   sections: Section[]
   className?: string
-  setApi?: (api: any) => void
+  setApi?: (api: UseEmblaCarouselType[1]) => void
 }
 
 export function FullPageCarousel({ sections, className = '', setApi }: FullPageCarouselProps) {
@@ -54,7 +54,8 @@ export function FullPageCarousel({ sections, className = '', setApi }: FullPageC
     if (emblaApi) emblaApi.scrollNext()
   }, [emblaApi])
 
-  const onSelect = useCallback((emblaApi: any) => {
+  const onSelect = useCallback((emblaApi: UseEmblaCarouselType[1]) => {
+    if (!emblaApi) return;
     setSelectedIndex(emblaApi.selectedScrollSnap())
     setCanScrollPrev(emblaApi.canScrollPrev())
     setCanScrollNext(emblaApi.canScrollNext())

@@ -16,6 +16,16 @@ import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
+import Image from 'next/image';
+
+// Type definitions
+interface Flavor {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  color: string;
+}
 
 // Sample flavor data - should match the data from the main page
 const flavors = [
@@ -75,7 +85,7 @@ export default function BuyPage() {
   const params = useParams();
   const router = useRouter();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Flavor | null>(null);
 
   const productId = parseInt(params.productId as string);
 
@@ -299,9 +309,11 @@ export default function BuyPage() {
                                 <div className={`w-16 h-16 bg-gradient-to-br ${flavor.color} rounded-xl overflow-hidden shadow-md flex-shrink-0 ${
                                   isSelected ? 'ring-2 ring-primary/30' : ''
                                 }`}>
-                                  <img
+                                  <Image
                                     src={flavor.image}
                                     alt={flavor.name}
+                                    width={64}
+                                    height={64}
                                     className="w-full h-full object-cover"
                                     onError={(e) => {
                                       const target = e.target as HTMLImageElement;
