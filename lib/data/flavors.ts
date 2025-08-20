@@ -26,7 +26,7 @@ export const flavors: Flavor[] = [
     image: "/products/berry.webp",
     color: "from-purple-400 to-purple-300",
     translationKey: "berryDelight",
-    price: 650 // Torta with Nuts (closest match)
+    price: 450 // Updated to match fresa price
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ export const flavors: Flavor[] = [
     image: "/products/fraise.webp",
     color: "from-pink-400 to-pink-300",
     translationKey: "strawberryDream",
-    price: 450 // Torta Strawberry
+    price: 450 // Torta Strawberry (fresa)
   },
   {
     id: 4,
