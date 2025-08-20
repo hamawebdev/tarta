@@ -67,8 +67,7 @@ export function SocialLinksSection() {
 
   const handleSocialClick = (url: string) => {
     if (url === '#') {
-      // Non-functional for now - could show a toast or modal
-      console.log('Maps functionality coming soon!')
+      // Maps functionality coming soon
       return
     }
     window.open(url, '_blank', 'noopener,noreferrer')

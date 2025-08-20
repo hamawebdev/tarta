@@ -44,7 +44,7 @@ export const ProductSelectionItem = memo(function ProductSelectionItem({
 
   return (
     <div
-      className={`flex items-center space-x-4 p-4 rounded-lg border-2 transition-all duration-200 bg-white cursor-pointer group ${
+      className={`flex items-center gap-2 sm:gap-3 md:gap-4 p-3 sm:p-4 rounded-lg border-2 transition-all duration-200 bg-white cursor-pointer group ${
         isSelected
           ? 'border-primary ring-2 ring-primary/20 shadow-md'
           : 'border-gray-200 hover:border-gray-300 hover:shadow-sm'
@@ -57,15 +57,18 @@ export const ProductSelectionItem = memo(function ProductSelectionItem({
         }
       }}
     >
+      {/* Checkbox - responsive sizing */}
       <Checkbox
         id={`product-${flavor.id}`}
         checked={isSelected}
         onCheckedChange={(checked) => {
           onToggle(flavor.id, checked as boolean);
         }}
-        className="flex-shrink-0"
+        className="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 touch-manipulation"
       />
-      <div className={`w-16 h-16 bg-gradient-to-br ${flavor.color} rounded-xl overflow-hidden shadow-md flex-shrink-0 ${
+
+      {/* Product Image - responsive sizing */}
+      <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br ${flavor.color} rounded-lg sm:rounded-xl overflow-hidden shadow-md flex-shrink-0 ${
         isSelected ? 'ring-2 ring-primary/30' : ''
       }`}>
         <Image
@@ -81,25 +84,32 @@ export const ProductSelectionItem = memo(function ProductSelectionItem({
           }}
         />
       </div>
+
+      {/* Product Info - responsive text sizing */}
       <div className="flex-1 min-w-0">
         <Label
           htmlFor={`product-${flavor.id}`}
-          className={`text-base font-semibold block pointer-events-none ${
+          className={`text-sm sm:text-base font-semibold block pointer-events-none leading-tight ${
             isSelected ? 'text-primary' : 'text-gray-900'
           }`}
         >
           {flavor.translationKey ? tProducts(`${flavor.translationKey}.name`) : flavor.name}
         </Label>
         {flavor.price && (
-          <div className={`text-sm font-medium mt-1 ${
+          <div className={`text-xs sm:text-sm font-medium mt-0.5 sm:mt-1 ${
             isSelected ? 'text-primary/80' : 'text-gray-600'
           }`}>
             {flavor.price} دج
           </div>
         )}
       </div>
-      <div className="flex items-center space-x-2 flex-shrink-0">
-        <Label htmlFor={`quantity-${flavor.id}`} className="text-sm font-medium text-gray-700">
+
+      {/* Quantity Section - responsive layout */}
+      <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 flex-shrink-0">
+        <Label
+          htmlFor={`quantity-${flavor.id}`}
+          className="text-xs sm:text-sm font-medium text-gray-700 whitespace-nowrap"
+        >
           {t('quantity')}:
         </Label>
         <Input
@@ -143,7 +153,7 @@ export const ProductSelectionItem = memo(function ProductSelectionItem({
               }
             }
           }}
-          className={`w-20 text-center transition-all duration-200 !bg-white ${
+          className={`w-14 sm:w-16 md:w-20 text-center text-sm sm:text-base transition-all duration-200 !bg-white touch-manipulation ${
             isSelected
               ? 'border-primary/30 text-gray-900 focus:border-primary focus:ring-2 focus:ring-primary/20'
               : 'text-gray-400 border-gray-200'
@@ -170,7 +180,7 @@ export const ProductSelection = memo(function ProductSelection({
   onCardClick
 }: ProductSelectionProps) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {flavors.map((flavor) => {
         const isSelected = selectedProducts.some(p => p.id === flavor.id);
         const selectedProduct = selectedProducts.find(p => p.id === flavor.id);

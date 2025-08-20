@@ -1,10 +1,10 @@
 {
-  "name": "devsforfun-frontend-template",
-  "description": "devsForFun opensource frontend template",
-  "author": "devsForFun",
-  "email": "charan@devsforfun.com",
-  "website": "https://devsforfun.com",
-  "version": "0.1.0",
+  "name": "torta-excelencia",
+  "description": "Premium handcrafted cakes - Torta Excelencia",
+  "author": "Torta Excelencia",
+  "email": "info@torta-excelencia.com",
+  "website": "https://torta-excelencia.com",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",

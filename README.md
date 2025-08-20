@@ -1,6 +1,6 @@
-# Frontend Template - Next.js 15 + Tailwind CSS v4 + Supabase
+# Torta Excelencia - Premium Handcrafted Cakes
 
-A modern SaaS template built with Next.js 15, Tailwind CSS v4, Shadcn UI v2, Upstash Redis, and Supabase.
+A modern, production-ready Next.js application for Torta Excelencia, featuring multilingual support, responsive design, and seamless order management.
 
 ## Features
 
@@ -9,12 +9,14 @@ A modern SaaS template built with Next.js 15, Tailwind CSS v4, Shadcn UI v2, Ups
 - 🔥 **Shadcn UI v2** - Beautifully designed components
 - 🔐 **Supabase** - For authentication and database
 - 📝 **TypeScript** - Static type checking
+- 🌍 **Internationalization** - Arabic & English support with next-intl
 - 🌓 **Dark Mode** - Light and dark theme support
 - 🧩 **React Hook Form** - Flexible form validation
 - ⚙️ **Zod** - Schema validation
 - 🛡️ **Enhanced Security** - Robust authentication with rate limiting using Upstash
-- 🔒 **Security Headers** - CSP and other security headers (Coming Soon)
-- 🚫 **Anti-Brute Force** - Protection against authentication attacks (Coming Soon)
+- 🛒 **Order Management** - Telegram integration for order notifications
+- 🔍 **SEO Optimized** - Proper metadata, sitemap, and robots.txt
+- 📱 **Mobile Responsive** - Optimized for all device sizes
 
 ## Prerequisites
 
@@ -158,23 +160,48 @@ Your application should now be running at [http://localhost:3000](http://localho
 
 ## Deployment
 
-The application can be deployed to any platform that supports Next.js, such as Vercel, Netlify, or a custom server.
+### Production Environment Variables
+
+Before deploying, ensure you set the following environment variables in your production environment:
+
+```bash
+# Required Production Variables
+NEXT_PUBLIC_SITE_URL=https://torta-excelencia.com
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-production-anon-key
+UPSTASH_REDIS_REST_URL=https://your-redis.upstash.io
+UPSTASH_REDIS_REST_TOKEN=your-production-token
+
+# Optional
+GOOGLE_SITE_VERIFICATION=your-google-verification-code
+```
+
+### Deploy to Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Set the environment variables in Vercel dashboard
+4. Deploy automatically on every push to main branch
+
+### Deploy to Other Platforms
 
 ```bash
 # Build the application
 pnpm build
-# or
-npm run build
-# or
-yarn build
 
 # Start the production server
 pnpm start
-# or
-npm start
-# or
-yarn start
 ```
+
+### Pre-deployment Checklist
+
+- [ ] Update environment variables for production
+- [ ] Test the build locally with `pnpm build && pnpm start`
+- [ ] Verify all console.log statements are removed
+- [ ] Check that robots.txt and sitemap.xml are properly configured
+- [ ] Ensure Supabase production database is set up
+- [ ] Configure Telegram bot for order notifications
+- [ ] Test order submission flow
 
 ## Available Scripts
 

@@ -26,8 +26,8 @@ export default function Home() {
   }, [isHydrated]);
 
   const handleProductSelect = (product: Flavor) => {
-    // Handle product selection - could navigate to product page, add to cart, etc.
-    console.log(`Selected product: ${product.name}`);
+    // Handle product selection - navigate to product page
+    window.location.href = `/buy/${product.id}`;
   };
 
   const handleScrollToNext = () => {

@@ -1,11 +1,14 @@
 {
-  "name": "devsForFun starterkit",
-  "short_name": "starterkit",
+  "name": "Torta Excelencia - Premium Handcrafted Cakes",
+  "short_name": "Torta Excelencia",
   "icons": [
     { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
   ],
-  "theme_color": "#ffffff",
+  "theme_color": "#d97706",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "description": "Discover our exquisite collection of handcrafted cakes made with the finest ingredients."
 }

@@ -25,11 +25,9 @@ export default function ForgetPasswordPreview() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      // Assuming a function to send reset email
-      console.log(values);
+      // TODO: Implement actual password reset email functionality
       toast.success('Password reset email sent. Please check your inbox.');
     } catch (error) {
-      console.error('Error sending password reset email', error);
       toast.error('Failed to send password reset email. Please try again.');
     }
   }

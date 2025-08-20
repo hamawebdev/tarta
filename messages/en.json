@@ -90,12 +90,14 @@
     }
   },
   "Metadata": {
-    "title": "Product Preview",
-    "description": "Large responsive product previews with buy buttons",
+    "title": "Torta Excelencia - Premium Handcrafted Cakes",
+    "description": "Discover our exquisite collection of handcrafted cakes made with the finest ingredients. From classic chocolate to exotic flavors, each cake is a masterpiece of taste and artistry.",
+    "keywords": "premium cakes, handcrafted desserts, custom cakes, chocolate cake, berry cake, caramel cake, artisan bakery, gourmet desserts, celebration cakes, wedding cakes",
+    "author": "Torta Excelencia",
     "buyProductTitle": "Buy {productName} - Torta Excelencia",
-    "buyProductDescription": "Order {productName}: {productDescription}",
+    "buyProductDescription": "Order our delicious {productName}: {productDescription}. Handcrafted with premium ingredients and delivered fresh to your door.",
     "productNotFound": "Product Not Found",
-    "productNotFoundDescription": "The requested product could not be found."
+    "productNotFoundDescription": "The requested product could not be found. Please browse our collection of premium handcrafted cakes."
   }
 }
 

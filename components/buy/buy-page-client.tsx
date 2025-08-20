@@ -200,20 +200,20 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
   }
 
   return (
-    <div className={cn("min-h-screen bg-gradient-to-br p-4 md:p-6 lg:p-8", selectedProduct.color)}>
+    <div className={cn("min-h-screen bg-gradient-to-br p-3 sm:p-4 md:p-6 lg:p-8", selectedProduct.color)}>
       <div className="max-w-3xl mx-auto">
         {/* Header */}
-        <div className="flex items-center mb-8 md:mb-10">
+        <div className="flex items-center mb-6 sm:mb-8 md:mb-10">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => router.push('/')}
-            className="text-white hover:bg-white/20 mr-4 md:mr-6 h-10 px-3 font-medium transition-all duration-200"
+            className="text-white hover:bg-white/20 mr-3 sm:mr-4 md:mr-6 h-9 sm:h-10 px-2 sm:px-3 font-medium transition-all duration-200 touch-manipulation"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
+            <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
             {tCommon('back')}
           </Button>
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
             {t('title')}
           </h1>
         </div>
@@ -221,29 +221,29 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
         {/* Order Form */}
         <Card className="bg-white/95 backdrop-blur-md shadow-xl border-0 overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/60 via-primary to-primary/60"></div>
-          <CardHeader className="pb-6 px-6 md:px-8 pt-8">
-            <CardTitle className="flex items-center text-xl md:text-2xl font-bold text-gray-900 tracking-tight mb-3">
-              <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center mr-3">
-                <ShoppingCart className="w-5 h-5 text-primary" />
+          <CardHeader className="pb-4 sm:pb-6 px-4 sm:px-6 md:px-8 pt-6 sm:pt-8">
+            <CardTitle className="flex items-center text-lg sm:text-xl md:text-2xl font-bold text-gray-900 tracking-tight mb-2 sm:mb-3">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-primary/10 rounded-lg flex items-center justify-center mr-2 sm:mr-3">
+                <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
               </div>
               {t('orderDetails')}
             </CardTitle>
-            <CardDescription className="text-base md:text-lg text-gray-700 font-medium leading-relaxed">
+            <CardDescription className="text-sm sm:text-base md:text-lg text-gray-700 font-medium leading-relaxed">
               {t('orderDescription')}
             </CardDescription>
           </CardHeader>
-          <CardContent className="px-6 md:px-8 pb-8">
+          <CardContent className="px-4 sm:px-6 md:px-8 pb-6 sm:pb-8">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 sm:space-y-8">
+                <div className="space-y-6 sm:space-y-8 animate-in slide-in-from-bottom-4 duration-500">
 
                 {/* Product Selection */}
                 <FormField
                   control={form.control}
                   name="selectedProducts"
                   render={() => (
-                    <FormItem className="space-y-3 animate-in slide-in-from-left-4 duration-500">
-                      <FormLabel className="text-base font-semibold text-gray-900 tracking-tight">
+                    <FormItem className="space-y-2 sm:space-y-3 animate-in slide-in-from-left-4 duration-500">
+                      <FormLabel className="text-sm sm:text-base font-semibold text-gray-900 tracking-tight">
                         {t('selectProducts')}
                       </FormLabel>
                       <FormControl>

@@ -126,12 +126,10 @@ export async function POST(request: NextRequest) {
 
     if (!telegramResponse.ok) {
       const errorData = await telegramResponse.json();
-      console.error('Telegram API error:', errorData);
       throw new Error(`Telegram API error: ${errorData.description || 'Unknown error'}`);
     }
 
     const telegramData = await telegramResponse.json();
-    console.log('Order sent to Telegram successfully:', telegramData);
 
     return NextResponse.json(
       {
@@ -143,8 +141,6 @@ export async function POST(request: NextRequest) {
     );
 
   } catch (error) {
-    console.error('Error processing order:', error);
-
     return NextResponse.json(
       {
         error: 'Failed to process order',
