@@ -21,18 +21,25 @@ interface OrderData {
     image: string;
     color: string;
     quantity: number;
+    price?: number;
   }>;
 }
 
 function formatOrderMessage(orderData: OrderData): string {
   const { fullName, phoneNumber, address, shippingMethod, selectedProductsWithDetails } = orderData;
 
-  // Calculate total items
+  // Calculate total items and total price
   const totalItems = selectedProductsWithDetails.reduce((sum, product) => sum + product.quantity, 0);
+  const totalPrice = selectedProductsWithDetails.reduce((sum, product) => {
+    return sum + ((product.price || 0) * product.quantity);
+  }, 0);
 
-  // Format products list without descriptions
+  // Format products list with prices
   const productsList = selectedProductsWithDetails
-    .map(product => `• <b>${product.name}</b> (Qty: ${product.quantity})`)
+    .map(product => {
+      const itemTotal = (product.price || 0) * product.quantity;
+      return `• <b>${product.name}</b> (Qty: ${product.quantity}) - ${itemTotal} DZD`;
+    })
     .join('\n');
 
   // Create formatted message with HTML formatting
@@ -47,6 +54,8 @@ function formatOrderMessage(orderData: OrderData): string {
 
 🍰 <b>Products Ordered (${totalItems} items):</b>
 ${productsList}
+
+💰 <b>Total Price:</b> ${totalPrice} DZD
 
 📅 <b>Order Time:</b> ${new Date().toLocaleString('en-US', {
     timeZone: 'UTC',

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useTranslations } from 'next-intl';
 
 interface Flavor {
   id: number;
@@ -12,6 +13,7 @@ interface Flavor {
   description: string;
   image: string;
   color: string;
+  price?: number;
 }
 
 interface ProductSelectionItemProps {
@@ -33,6 +35,9 @@ export const ProductSelectionItem = memo(function ProductSelectionItem({
   onCardClick
 }: ProductSelectionItemProps) {
   const [localQty, setLocalQty] = useState(String(quantity ?? ''));
+  const t = useTranslations('Buy');
+  const tProducts = useTranslations('Products');
+
   useEffect(() => {
     setLocalQty(String(quantity ?? ''));
   }, [quantity]);
@@ -83,12 +88,19 @@ export const ProductSelectionItem = memo(function ProductSelectionItem({
             isSelected ? 'text-primary' : 'text-gray-900'
           }`}
         >
-          {flavor.name}
+          {flavor.translationKey ? tProducts(`${flavor.translationKey}.name`) : flavor.name}
         </Label>
+        {flavor.price && (
+          <div className={`text-sm font-medium mt-1 ${
+            isSelected ? 'text-primary/80' : 'text-gray-600'
+          }`}>
+            {flavor.price} دج
+          </div>
+        )}
       </div>
       <div className="flex items-center space-x-2 flex-shrink-0">
         <Label htmlFor={`quantity-${flavor.id}`} className="text-sm font-medium text-gray-700">
-          Qty:
+          {t('quantity')}:
         </Label>
         <Input
           id={`quantity-${flavor.id}`}

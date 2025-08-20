@@ -1,6 +1,7 @@
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import { getFlavorById, getAllFlavorIds } from '@/lib/data/flavors';
 import BuyPageClient from '@/components/buy/buy-page-client';
+import { getTranslations } from 'next-intl/server';
 
 // Static generation for instant page loading
 export async function generateStaticParams() {
@@ -16,20 +17,25 @@ export async function generateMetadata({ params }: { params: Promise<{ productId
   const { productId: productIdStr } = await params;
   const productId = parseInt(productIdStr);
   const product = getFlavorById(productId);
+  const t = await getTranslations('Metadata');
+  const tProducts = await getTranslations('Products');
 
   if (!product) {
     return {
-      title: 'Product Not Found',
-      description: 'The requested product could not be found.',
+      title: t('productNotFound'),
+      description: t('productNotFoundDescription'),
     };
   }
 
+  const productName = product.translationKey ? tProducts(`${product.translationKey}.name`) : product.name;
+  const productDescription = product.translationKey ? tProducts(`${product.translationKey}.description`) : product.description;
+
   return {
-    title: `Buy ${product.name} - Torta Excelencia`,
-    description: `Order ${product.name}: ${product.description}`,
+    title: t('buyProductTitle', { productName }),
+    description: t('buyProductDescription', { productName, productDescription }),
     openGraph: {
-      title: `Buy ${product.name}`,
-      description: product.description,
+      title: t('buyProductTitle', { productName }),
+      description: productDescription,
       images: [product.image],
     },
   };

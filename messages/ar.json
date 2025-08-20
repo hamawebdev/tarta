@@ -1,0 +1,101 @@
+{
+  "Common": {
+    "hello": "مرحبا",
+    "language": "اللغة",
+    "back": "رجوع",
+    "explore": "استكشف",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "close": "إغلاق"
+  },
+  "Hero": {
+    "title": "تورتا إكسيلينسيا",
+    "subtitle": "طبقات من السعادة",
+    "explore": "استكشف"
+  },
+  "Product": {
+    "buyThisFlavor": "اشتري هذا الطعم",
+    "productPreview": "معاينة المنتج"
+  },
+  "Products": {
+    "classicChocolate": {
+      "name": "الشوكولاتة الكلاسيكية",
+      "description": "كعكة شوكولاتة غنية ولذيذة مع طبقات من كريمة الشوكولاتة الحريرية"
+    },
+    "berryDelight": {
+      "name": "متعة التوت",
+      "description": "طبقات التوت الطازج مع الكريمة المخفوقة وكومبوت التوت"
+    },
+    "strawberryDream": {
+      "name": "حلم الفراولة",
+      "description": "طبقات الفراولة الطازجة مع الكريمة المخفوقة وكومبوت الفراولة"
+    },
+    "mangoBliss": {
+      "name": "نعيم المانجو",
+      "description": "كعكة المانجو الاستوائية مع كريمة المانجو وقطع المانجو الطازجة"
+    },
+    "pistachioDream": {
+      "name": "حلم الفستق",
+      "description": "كعكة الفستق الرقيقة مع كريمة الفستق والفستق المطحون"
+    },
+    "caramel": {
+      "name": "الكراميل",
+      "description": "كعكة الكراميل الفاخرة مع صوص الكراميل الغني وكريمة الكراميل الزبدية"
+    }
+  },
+  "SocialLinks": {
+    "title": "تواصل معنا",
+    "subtitle": "تابعنا على وسائل التواصل الاجتماعي",
+    "instagram": "إنستغرام",
+    "facebook": "فيسبوك",
+    "tiktok": "تيك توك",
+    "location": "الموقع",
+    "phone": "الهاتف",
+    "callNow": "اتصل الآن",
+    "thankYouMessage": "شكراً لك لاختيار تورتا إكسيلينسيا"
+  },
+  "Buy": {
+    "title": "أكمل طلبك",
+    "orderDetails": "تفاصيل الطلب",
+    "orderDescription": "يرجى ملء بياناتك لإكمال طلبك.",
+    "selectProducts": "اختر المنتجات",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "أدخل اسمك الكامل",
+    "phoneNumber": "رقم الهاتف",
+    "phoneNumberPlaceholder": "أدخل رقم هاتفك",
+    "address": "العنوان",
+    "addressPlaceholder": "أدخل عنوانك الكامل",
+    "shippingMethod": "طريقة الشحن",
+    "pickup": "استلام في المكتب",
+    "delivery": "توصيل الى المنزل",
+    "quantity": "الكمية",
+    "orderSummary": "ملخص الطلب",
+    "total": "المجموع",
+    "placeOrder": "تأكيد الطلب",
+    "placingOrder": "جاري تأكيد الطلب...",
+    "orderConfirmed": "تم تأكيد الطلب!",
+    "thankYou": "شكراً لك! تم استلام طلبك.",
+    "backToHome": "العودة للرئيسية",
+    "validation": {
+      "nameMinLength": "يجب أن يكون الاسم على الأقل حرفين",
+      "phoneMinLength": "يجب أن يكون رقم الهاتف على الأقل 10 أرقام",
+      "addressMinLength": "يجب أن يكون العنوان على الأقل 10 أحرف",
+      "selectShippingMethod": "يرجى اختيار طريقة الشحن",
+      "selectAtLeastOneProduct": "يرجى اختيار منتج واحد على الأقل",
+      "quantityMinimum": "يجب أن تكون الكمية على الأقل 1",
+      "quantityMaximum": "الحد الأقصى للكمية هو 50"
+    }
+  },
+  "Metadata": {
+    "title": "تورتا إكسيلينسيا",
+    "description": "معاينات منتجات كبيرة ومتجاوبة مع أزرار الشراء",
+    "buyProductTitle": "اشتري {productName} - تورتا إكسيلينسيا",
+    "buyProductDescription": "اطلب {productName}: {productDescription}",
+    "productNotFound": "المنتج غير موجود",
+    "productNotFoundDescription": "لم يتم العثور على المنتج المطلوب."
+  }
+}
+

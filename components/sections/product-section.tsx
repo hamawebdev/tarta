@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ShoppingCart } from 'lucide-react'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 interface Product {
   id: number
@@ -25,6 +26,8 @@ interface ProductSectionProps {
 
 export function ProductSection({ product, isLast = false, priority = false }: ProductSectionProps) {
   const [imgLoaded, setImgLoaded] = useState(false)
+  const t = useTranslations('Product');
+
   // Keep the render path free of any async/state work before navigation to ensure instant feel
   return (
     <div className={`h-full w-full bg-gradient-to-br ${product.color} relative overflow-hidden`}>
@@ -63,7 +66,7 @@ export function ProductSection({ product, isLast = false, priority = false }: Pr
                   // Fallback if image fails to load
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
-                  target.parentElement!.innerHTML = '<div class=\"w-full h-full flex items-center justify-center\"><span class=\"text-white font-semibold text-lg tracking-wide\">Product Preview</span></div>';
+                  target.parentElement!.innerHTML = `<div class="w-full h-full flex items-center justify-center"><span class="text-white font-semibold text-lg tracking-wide">${t('productPreview')}</span></div>`;
                 }}
               />
             </div>
@@ -82,7 +85,7 @@ export function ProductSection({ product, isLast = false, priority = false }: Pr
             <Link href={`/buy/${product.id}`} prefetch>
               <span className="flex items-center gap-3">
                 <ShoppingCart size={20} />
-                Buy This Flavor
+                {t('buyThisFlavor')}
               </span>
             </Link>
           </Button>

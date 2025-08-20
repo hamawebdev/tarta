@@ -3,6 +3,7 @@
 import React from 'react'
 import { Instagram, Facebook, Phone, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 
 // TikTok icon component since it's not in lucide-react
 const TikTokIcon = ({ className }: { className?: string }) => (
@@ -25,30 +26,32 @@ interface SocialLink {
 }
 
 export function SocialLinksSection() {
+  const t = useTranslations('SocialLinks');
+
   const socialLinks: SocialLink[] = [
     {
-      name: 'Instagram',
+      name: t('instagram'),
       url: 'https://www.instagram.com/torta_excelencia?igsh=eXY3dnA4bnp4MXIz',
       icon: <Instagram className="w-8 h-8" />,
       color: 'bg-gradient-to-br from-purple-500 to-pink-500',
       hoverColor: 'hover:from-purple-600 hover:to-pink-600'
     },
     {
-      name: 'Facebook',
+      name: t('facebook'),
       url: 'https://www.facebook.com/share/16zUe4pJjx/',
       icon: <Facebook className="w-8 h-8" />,
       color: 'bg-gradient-to-br from-blue-500 to-blue-600',
       hoverColor: 'hover:from-blue-600 hover:to-blue-700'
     },
     {
-      name: 'TikTok',
+      name: t('tiktok'),
       url: 'https://www.tiktok.com/@torta.excelencia?_t=ZS-8z0InOR3XVq&_r=1',
       icon: <TikTokIcon className="w-8 h-8" />,
       color: 'bg-gradient-to-br from-gray-700 to-gray-900',
       hoverColor: 'hover:from-gray-800 hover:to-black'
     },
     {
-      name: 'Location',
+      name: t('location'),
       url: '#', // Non-functional for now
       icon: <MapPin className="w-8 h-8" />,
       color: 'bg-gradient-to-br from-red-500 to-red-600',
@@ -89,10 +92,10 @@ export function SocialLinksSection() {
         {/* Header */}
         <div className="text-center mb-8 md:mb-12 animate-in slide-in-from-bottom-4 delay-100">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 tracking-tight">
-            Connect With Us
+            {t('title')}
           </h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-            Follow our journey and stay updated with the latest creations
+            {t('subtitle')}
           </p>
         </div>
 
@@ -152,7 +155,7 @@ export function SocialLinksSection() {
             </div>
             <div className="flex flex-col items-start">
               <span className="font-semibold text-sm md:text-base tracking-wide">
-                Call Us
+                {t('callNow')}
               </span>
               <span className="text-xs md:text-sm text-white/90 font-mono">
                 {phoneNumber}
@@ -164,7 +167,7 @@ export function SocialLinksSection() {
         {/* Footer Text */}
         <div className="text-center mt-8 md:mt-12 animate-in slide-in-from-bottom-4 delay-700">
           <p className="text-sm md:text-base text-gray-500">
-            Thank you for choosing Torta Excelencia
+            {t('thankYouMessage')}
           </p>
         </div>
       </div>

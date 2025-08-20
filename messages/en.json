@@ -1,0 +1,101 @@
+{
+  "Common": {
+    "hello": "Hello",
+    "language": "Language",
+    "back": "Back",
+    "explore": "Explore",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "close": "Close"
+  },
+  "Hero": {
+    "title": "Torta Excelencia",
+    "subtitle": "Capas de Felicidad",
+    "explore": "Explore"
+  },
+  "Product": {
+    "buyThisFlavor": "Buy This Flavor",
+    "productPreview": "Product Preview"
+  },
+  "Products": {
+    "classicChocolate": {
+      "name": "Classic Chocolate",
+      "description": "Rich, decadent chocolate cake layered with silky chocolate ganache"
+    },
+    "berryDelight": {
+      "name": "Berry Delight",
+      "description": "Fresh berry layers with whipped cream and berry compote"
+    },
+    "strawberryDream": {
+      "name": "Strawberry Dream",
+      "description": "Fresh strawberry layers with whipped cream and strawberry compote"
+    },
+    "mangoBliss": {
+      "name": "Mango Bliss",
+      "description": "Tropical mango cake with mango cream and fresh mango pieces"
+    },
+    "pistachioDream": {
+      "name": "Pistachio Dream",
+      "description": "Delicate pistachio cake with pistachio cream and crushed pistachios"
+    },
+    "caramel": {
+      "name": "Caramel",
+      "description": "Luxurious caramel cake with rich caramel sauce and buttery caramel cream"
+    }
+  },
+  "SocialLinks": {
+    "title": "Connect With Us",
+    "subtitle": "Follow us on social media",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "tiktok": "TikTok",
+    "location": "Location",
+    "phone": "Phone",
+    "callNow": "Call Now",
+    "thankYouMessage": "Thank you for choosing Torta Excelencia"
+  },
+  "Buy": {
+    "title": "Complete Your Order",
+    "orderDetails": "Order Details",
+    "orderDescription": "Please fill in your details to complete your order.",
+    "selectProducts": "Select Products",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "phoneNumber": "Phone Number",
+    "phoneNumberPlaceholder": "Enter your phone number",
+    "address": "Address",
+    "addressPlaceholder": "Enter your full address",
+    "shippingMethod": "Shipping Method",
+    "pickup": "Pickup",
+    "delivery": "Delivery",
+    "quantity": "Quantity",
+    "orderSummary": "Order Summary",
+    "total": "Total",
+    "placeOrder": "Place Order",
+    "placingOrder": "Placing Order...",
+    "orderConfirmed": "Order Confirmed!",
+    "thankYou": "Thank you! Your order has been received.",
+    "backToHome": "Back to Home",
+    "validation": {
+      "nameMinLength": "Name must be at least 2 characters long",
+      "phoneMinLength": "Phone number must be at least 10 digits",
+      "addressMinLength": "Address must be at least 10 characters long",
+      "selectShippingMethod": "Please select a shipping method",
+      "selectAtLeastOneProduct": "Please select at least one product",
+      "quantityMinimum": "Quantity must be at least 1",
+      "quantityMaximum": "Maximum quantity is 50"
+    }
+  },
+  "Metadata": {
+    "title": "Product Preview",
+    "description": "Large responsive product previews with buy buttons",
+    "buyProductTitle": "Buy {productName} - Torta Excelencia",
+    "buyProductDescription": "Order {productName}: {productDescription}",
+    "productNotFound": "Product Not Found",
+    "productNotFoundDescription": "The requested product could not be found."
+  }
+}
+

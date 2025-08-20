@@ -17,6 +17,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { flavors, type Flavor } from '@/lib/data/flavors';
 import { cn } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 // Dynamic imports for code splitting
 const ProductSelection = lazy(() => import('@/components/ui/product-selection').then(mod => ({ default: mod.ProductSelection })));
@@ -40,19 +41,19 @@ const ProductSelectionFallback = () => (
   </div>
 );
 
-// Form validation schema
-const orderFormSchema = z.object({
-  fullName: z.string().min(2, { message: 'Name must be at least 2 characters long' }),
-  phoneNumber: z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
-  address: z.string().min(10, { message: 'Address must be at least 10 characters long' }),
+// Function to create form validation schema with translations
+const createOrderFormSchema = (t: any) => z.object({
+  fullName: z.string().min(2, { message: t('validation.nameMinLength') }),
+  phoneNumber: z.string().min(10, { message: t('validation.phoneMinLength') }),
+  address: z.string().min(10, { message: t('validation.addressMinLength') }),
   shippingMethod: z.enum(['pickup', 'delivery'], {
-    required_error: 'Please select a shipping method'
+    required_error: t('validation.selectShippingMethod')
   }),
   selectedProducts: z.array(z.object({
     id: z.number(),
-    quantity: z.number().min(1, { message: 'Quantity must be at least 1' })
-      .max(50, { message: 'Maximum quantity is 50' }),
-  })).min(1, { message: 'Please select at least one product' }),
+    quantity: z.number().min(1, { message: t('validation.quantityMinimum') })
+      .max(50, { message: t('validation.quantityMaximum') }),
+  })).min(1, { message: t('validation.selectAtLeastOneProduct') }),
 });
 
 interface BuyPageClientProps {
@@ -62,8 +63,14 @@ interface BuyPageClientProps {
 export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
   const router = useRouter();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const t = useTranslations('Buy');
+  const tCommon = useTranslations('Common');
+  const tProducts = useTranslations('Products');
 
   const productId = selectedProduct.id;
+
+  // Create schema with translations
+  const orderFormSchema = useMemo(() => createOrderFormSchema(t), [t]);
 
   // Memoize form default values to prevent unnecessary re-initialization
   const defaultValues = useMemo(() => ({
@@ -111,6 +118,21 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
     }
   }, [form]);
 
+  // Calculate total price
+  const calculateTotal = useCallback((selectedProducts: Array<{ id: number; quantity: number }>) => {
+    return selectedProducts.reduce((total, selectedProduct) => {
+      const flavor = flavors.find(f => f.id === selectedProduct.id);
+      if (flavor && flavor.price) {
+        return total + (flavor.price * selectedProduct.quantity);
+      }
+      return total;
+    }, 0);
+  }, []);
+
+  // Watch selected products to calculate total
+  const selectedProducts = form.watch('selectedProducts');
+  const totalPrice = calculateTotal(selectedProducts);
+
   async function onSubmit(values: z.infer<typeof orderFormSchema>) {
     try {
       // Prepare order data with product details
@@ -157,10 +179,10 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
               </div>
               <div className="space-y-4">
                 <h2 className="text-3xl font-bold text-green-800 tracking-tight leading-tight">
-                  Order Confirmed!
+                  {t('orderConfirmed')}
                 </h2>
                 <p className="text-lg text-green-700 font-medium leading-relaxed max-w-sm mx-auto">
-                  Thank you! Your order has been received.
+                  {t('thankYou')}
                 </p>
               </div>
               <Button
@@ -168,7 +190,7 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
                 size="lg"
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 font-semibold tracking-tight shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                Continue Shopping
+                {t('backToHome')}
               </Button>
             </div>
           </CardContent>
@@ -189,10 +211,10 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
             className="text-white hover:bg-white/20 mr-4 md:mr-6 h-10 px-3 font-medium transition-all duration-200"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
+            {tCommon('back')}
           </Button>
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">
-            Complete Your Order
+            {t('title')}
           </h1>
         </div>
 
@@ -204,10 +226,10 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
               <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center mr-3">
                 <ShoppingCart className="w-5 h-5 text-primary" />
               </div>
-              Order Details
+              {t('orderDetails')}
             </CardTitle>
             <CardDescription className="text-base md:text-lg text-gray-700 font-medium leading-relaxed">
-              Please fill in your details to complete your order.
+              {t('orderDescription')}
             </CardDescription>
           </CardHeader>
           <CardContent className="px-6 md:px-8 pb-8">
@@ -222,7 +244,7 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
                   render={() => (
                     <FormItem className="space-y-3 animate-in slide-in-from-left-4 duration-500">
                       <FormLabel className="text-base font-semibold text-gray-900 tracking-tight">
-                        Select Products
+                        {t('selectProducts')}
                       </FormLabel>
                       <FormControl>
                         <Suspense fallback={<ProductSelectionFallback />}>
@@ -240,6 +262,50 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
                   )}
                 />
 
+                {/* Order Summary */}
+                {selectedProducts.length > 0 && (
+                  <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-lg p-6 border border-primary/20 animate-in slide-in-from-bottom-4 duration-500">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                      <div className="w-6 h-6 bg-primary/10 rounded-full flex items-center justify-center mr-3">
+                        <ShoppingCart className="w-4 h-4 text-primary" />
+                      </div>
+                      {t('orderSummary')}
+                    </h3>
+                    <div className="space-y-3">
+                      {selectedProducts.map((selectedProduct) => {
+                        const flavor = flavors.find(f => f.id === selectedProduct.id);
+                        if (!flavor) return null;
+
+                        const productName = flavor.translationKey
+                          ? tProducts(`${flavor.translationKey}.name`)
+                          : flavor.name;
+                        const itemTotal = (flavor.price || 0) * selectedProduct.quantity;
+
+                        return (
+                          <div key={selectedProduct.id} className="flex justify-between items-center text-sm">
+                            <span className="text-gray-700">
+                              {productName} × {selectedProduct.quantity}
+                            </span>
+                            <span className="font-medium text-gray-900">
+                              {itemTotal} دج
+                            </span>
+                          </div>
+                        );
+                      })}
+                      <div className="border-t border-primary/20 pt-3 mt-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-lg font-semibold text-gray-900">
+                            {t('total')}:
+                          </span>
+                          <span className="text-xl font-bold text-primary">
+                            {totalPrice} دج
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* Customer Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in slide-in-from-right-4 duration-500 delay-200">
                   <FormField
@@ -247,10 +313,10 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
                     name="fullName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-base font-semibold text-gray-900 tracking-tight">Full Name</FormLabel>
+                        <FormLabel className="text-base font-semibold text-gray-900 tracking-tight">{t('fullName')}</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Enter your full name"
+                            placeholder={t('fullNamePlaceholder')}
                             {...field}
                             className="h-12 text-base border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 !bg-white text-gray-900"
                           />
@@ -265,10 +331,10 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
                     name="phoneNumber"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-base font-semibold text-gray-900 tracking-tight">Phone Number</FormLabel>
+                        <FormLabel className="text-base font-semibold text-gray-900 tracking-tight">{t('phoneNumber')}</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Enter your phone number"
+                            placeholder={t('phoneNumberPlaceholder')}
                             {...field}
                             className="h-12 text-base border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 !bg-white text-gray-900"
                           />
@@ -284,10 +350,10 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
                   name="address"
                   render={({ field }) => (
                     <FormItem className="animate-in slide-in-from-left-4 duration-500 delay-300">
-                      <FormLabel className="text-base font-semibold text-gray-900 tracking-tight">Address</FormLabel>
+                      <FormLabel className="text-base font-semibold text-gray-900 tracking-tight">{t('address')}</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Enter your full address"
+                          placeholder={t('addressPlaceholder')}
                           className="min-h-[100px] text-base border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 resize-none !bg-white text-gray-900"
                           {...field}
                         />
@@ -302,7 +368,7 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
                   name="shippingMethod"
                   render={({ field }) => (
                     <FormItem className="space-y-3 animate-in slide-in-from-right-4 duration-500 delay-400">
-                      <FormLabel className="text-base font-semibold text-gray-900 tracking-tight">Shipping Method</FormLabel>
+                      <FormLabel className="text-base font-semibold text-gray-900 tracking-tight">{t('shippingMethod')}</FormLabel>
                       <FormControl>
                         <RadioGroup
                           onValueChange={field.onChange}
@@ -312,13 +378,13 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
                           <div className="flex items-center space-x-3 p-4 rounded-lg border-2 border-gray-200 hover:border-gray-300 transition-all duration-200 bg-white">
                             <RadioGroupItem value="pickup" id="pickup" className="text-primary border-2 border-gray-300" />
                             <Label htmlFor="pickup" className="text-base font-medium text-gray-900 cursor-pointer flex-1">
-                              Pickup
+                              {t('pickup')}
                             </Label>
                           </div>
                           <div className="flex items-center space-x-3 p-4 rounded-lg border-2 border-gray-200 hover:border-gray-300 transition-all duration-200 bg-white">
                             <RadioGroupItem value="delivery" id="delivery" className="text-primary border-2 border-gray-300" />
                             <Label htmlFor="delivery" className="text-base font-medium text-gray-900 cursor-pointer flex-1">
-                              Delivery
+                              {t('delivery')}
                             </Label>
                           </div>
                         </RadioGroup>
@@ -348,12 +414,12 @@ export default function BuyPageClient({ selectedProduct }: BuyPageClientProps) {
                     {form.formState.isSubmitting ? (
                       <div className="flex items-center space-x-2">
                         <div className="w-5 h-5 border-2 border-gray-900/20 border-t-gray-900 rounded-full animate-spin"></div>
-                        <span>Placing Order...</span>
+                        <span>{t('placingOrder')}</span>
                       </div>
                     ) : (
                       <div className="flex items-center space-x-2">
                         <ShoppingCart className="w-5 h-5" />
-                        <span>Place Order</span>
+                        <span>{t('placeOrder')}</span>
                       </div>
                     )}
                   </Button>

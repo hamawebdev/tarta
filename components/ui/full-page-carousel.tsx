@@ -28,7 +28,7 @@ export function FullPageCarousel({ sections, className = '', setApi }: FullPageC
     watchSlides: true,
     dragThreshold: 8, // slightly more responsive on touch devices
     inViewThreshold: 0.9, // require slides to be more in view before snapping (smoother)
-    duration: 30, // Slightly longer for smoother transitions
+    duration: 18, // Faster transitions to reduce perceived latency
     startIndex: 0,
     // Enhanced smooth scrolling
     align: 'start',
@@ -103,44 +103,73 @@ export function FullPageCarousel({ sections, className = '', setApi }: FullPageC
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [emblaApi, isHydrated])
 
-  // Handle wheel events for desktop with animation-aware gating (reduces lag on fast scrolls)
+  // Handle wheel events for desktop with lower latency and delta-proportional steps
   useEffect(() => {
     if (!isHydrated || !emblaApi) return
 
     let isAnimating = false
+    let wheelAccumulator = 0
+    let lastWheelTime = 0
+    let unlockTimer: number | null = null
+
+    const STEP_SIZE = 120 // Typical wheel notch in px-equivalent units
+    const ACTIVATION = 30 // Lower threshold for more responsive start
+    const MAX_STEPS = 3 // Cap how many slides to advance per strong flick
+    const RESET_MS = 300 // Reset accumulation if wheel pauses
 
     const releaseOnSettle = () => {
       isAnimating = false
     }
 
     const handleWheel = (event: WheelEvent) => {
-      // Prevent the browser from doing native scroll
+      // Prevent native scroll to keep snapping behavior
       event.preventDefault()
       event.stopPropagation()
 
+      const now = performance.now()
+      if (now - lastWheelTime > RESET_MS) {
+        wheelAccumulator = 0
+      }
+      lastWheelTime = now
+
+      // Normalize delta for line-based wheels
+      const delta = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaY
+      wheelAccumulator += delta
+
+      if (Math.abs(wheelAccumulator) < ACTIVATION) return
       if (isAnimating) return
 
-      // Higher threshold to ignore tiny trackpad noise but keep responsiveness
-      const threshold = 20
-      if (Math.abs(event.deltaY) <= threshold) return
+      const direction = wheelAccumulator > 0 ? 1 : -1
+      const steps = Math.min(
+        MAX_STEPS,
+        Math.max(1, Math.floor(Math.abs(wheelAccumulator) / STEP_SIZE) || 1)
+      )
 
-      if (event.deltaY > 0) {
-        emblaApi.scrollNext()
-      } else {
-        emblaApi.scrollPrev()
-      }
-      // Block further wheel-triggered scroll until Embla finishes the animation
+      const snaps = emblaApi.scrollSnapList()
+      const current = emblaApi.selectedScrollSnap()
+      const target = Math.max(0, Math.min(snaps.length - 1, current + direction * steps))
+
+      emblaApi.scrollTo(target)
+
+      // Reduce accumulator by the amount we just consumed so large flicks can continue
+      wheelAccumulator -= direction * steps * STEP_SIZE
+
+      // Gate further wheel-triggered scrolls briefly to reduce jitter but keep it snappy
       isAnimating = true
+      if (unlockTimer) window.clearTimeout(unlockTimer)
+      unlockTimer = window.setTimeout(() => {
+        isAnimating = false
+      }, 220)
     }
 
-    // Listen for when Embla settles to re-enable wheel scrolling
+    // Also unlock when Embla settles naturally
     emblaApi.on('settle', releaseOnSettle)
 
-    // Add wheel event listener to the document (could be scoped to root if desired)
     document.addEventListener('wheel', handleWheel, { passive: false })
     return () => {
       document.removeEventListener('wheel', handleWheel)
       emblaApi.off('settle', releaseOnSettle)
+      if (unlockTimer) window.clearTimeout(unlockTimer)
     }
   }, [emblaApi, isHydrated])
 
