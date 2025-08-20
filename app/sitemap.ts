@@ -14,16 +14,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${baseUrl}/en`,
+      url: `${baseUrl}/ar`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/ar`,
+      url: `${baseUrl}/en`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
-      priority: 0.9,
+      priority: 0.8,
     },
   ]
 
@@ -36,16 +36,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/en/buy/${flavor.id}`,
+      url: `${baseUrl}/ar/buy/${flavor.id}`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/ar/buy/${flavor.id}`,
+      url: `${baseUrl}/en/buy/${flavor.id}`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
-      priority: 0.8,
+      priority: 0.7,
     },
   ])
 

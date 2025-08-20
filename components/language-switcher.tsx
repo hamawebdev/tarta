@@ -34,7 +34,7 @@ export function LanguageSwitcher() {
     { code: 'ar', name: 'العربية' },
   ];
 
-  const currentLanguage = languages.find(lang => lang.code === locale) || languages[0];
+  const currentLanguage = languages.find(lang => lang.code === locale) || languages[1];
 
   // Show loading state during hydration
   if (!isHydrated) {
@@ -43,7 +43,7 @@ export function LanguageSwitcher() {
         <div className="bg-white/90 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-gray-200">
           <Button variant="ghost" size="sm" disabled className="text-sm font-medium text-black">
 
-            English
+            العربية
             <ChevronDown className="ml-2 h-4 w-4" />
           </Button>
         </div>

@@ -13,15 +13,15 @@ export default getRequestConfig(async () => {
     const acceptLanguage = headersList.get('accept-language');
     if (acceptLanguage) {
       const preferredLang = acceptLanguage.split(',')[0].split('-')[0];
-      locale = ['en', 'ar'].includes(preferredLang) ? preferredLang : 'en';
+      locale = ['en', 'ar'].includes(preferredLang) ? preferredLang : 'ar';
     } else {
-      locale = 'en';
+      locale = 'ar';
     }
   }
 
   // Ensure we have a valid locale
   if (!['en', 'ar'].includes(locale)) {
-    locale = 'en';
+    locale = 'ar';
   }
 
   return {
