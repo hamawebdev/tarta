@@ -66,6 +66,11 @@ export const flavors: Flavor[] = [
   }
 ];
 
+// Helper function to get all flavors
+export function getFlavors(): Flavor[] {
+  return flavors;
+}
+
 // Helper function to get a flavor by ID
 export function getFlavorById(id: number): Flavor | undefined {
   return flavors.find(flavor => flavor.id === id);

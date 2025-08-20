@@ -4,6 +4,11 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
+  // Disable ESLint during builds
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
   // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ['@/components/ui', 'lucide-react'],

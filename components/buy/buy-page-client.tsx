@@ -42,7 +42,7 @@ const ProductSelectionFallback = () => (
 );
 
 // Function to create form validation schema with translations
-const createOrderFormSchema = (t: any) => z.object({
+const createOrderFormSchema = (t: (key: string) => string) => z.object({
   fullName: z.string().min(2, { message: t('validation.nameMinLength') }),
   phoneNumber: z.string().min(10, { message: t('validation.phoneMinLength') }),
   address: z.string().min(10, { message: t('validation.addressMinLength') }),

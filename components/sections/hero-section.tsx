@@ -37,7 +37,7 @@ export function HeroSection({ onScrollToNext }: HeroSectionProps) {
     video.style.willChange = 'transform'
     video.style.transform = 'translateZ(0)'
     video.style.backfaceVisibility = 'hidden'
-    ;(video.style as any).WebkitBackfaceVisibility = 'hidden'
+    ;(video.style as CSSStyleDeclaration & { WebkitBackfaceVisibility?: string }).WebkitBackfaceVisibility = 'hidden'
 
     const observer = new IntersectionObserver(
       ([entry]) => {

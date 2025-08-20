@@ -6,15 +6,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useTranslations } from 'next-intl';
-
-interface Flavor {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-  color: string;
-  price?: number;
-}
+import { type Flavor } from '@/lib/data/flavors';
 
 interface ProductSelectionItemProps {
   flavor: Flavor;

@@ -23,11 +23,11 @@ export default function ForgetPasswordPreview() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(_values: z.infer<typeof formSchema>) {
     try {
       // TODO: Implement actual password reset email functionality
       toast.success('Password reset email sent. Please check your inbox.');
-    } catch (error) {
+    } catch (_error) {
       toast.error('Failed to send password reset email. Please try again.');
     }
   }

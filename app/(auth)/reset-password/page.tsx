@@ -33,11 +33,11 @@ export default function ResetPasswordPreview() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(_values: z.infer<typeof formSchema>) {
     try {
       // TODO: Implement actual password reset functionality
       toast.success('Password reset successful. You can now log in with your new password.');
-    } catch (error) {
+    } catch (_error) {
       toast.error('Failed to reset the password. Please try again.');
     }
   }
