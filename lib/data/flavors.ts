@@ -12,7 +12,7 @@ export interface Flavor {
 export const flavors: Flavor[] = [
   {
     id: 1,
-    name: "Classic Chocolate",
+    name: "Chocolate",
     description: "Rich, decadent chocolate cake layered with silky chocolate ganache",
     image: "/products/choco.webp",
     color: "from-amber-900 to-amber-700",
@@ -21,7 +21,7 @@ export const flavors: Flavor[] = [
   },
   {
     id: 2,
-    name: "Berry Delight",
+    name: "Berry",
     description: "Fresh berry layers with whipped cream and berry compote",
     image: "/products/berry.webp",
     color: "from-purple-400 to-purple-300",
@@ -30,7 +30,7 @@ export const flavors: Flavor[] = [
   },
   {
     id: 3,
-    name: "Strawberry Dream",
+    name: "Strawberry",
     description: "Fresh strawberry layers with whipped cream and strawberry compote",
     image: "/products/fraise.webp",
     color: "from-pink-400 to-pink-300",
@@ -39,7 +39,7 @@ export const flavors: Flavor[] = [
   },
   {
     id: 4,
-    name: "Mango Bliss",
+    name: "Mango",
     description: "Tropical mango cake with mango cream and fresh mango pieces",
     image: "/products/mango.webp",
     color: "from-yellow-400 to-orange-300",
@@ -48,7 +48,7 @@ export const flavors: Flavor[] = [
   },
   {
     id: 5,
-    name: "Pistachio Dream",
+    name: "Pistachio",
     description: "Delicate pistachio cake with pistachio cream and crushed pistachios",
     image: "/products/pistache.webp",
     color: "from-green-400 to-green-300",

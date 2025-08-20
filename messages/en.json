@@ -54,7 +54,9 @@
     "tiktok": "TikTok",
     "location": "Location",
     "phone": "Phone",
+    "email": "Email",
     "callNow": "Call Now",
+    "emailUs": "Email Us",
     "thankYouMessage": "Thank you for choosing Torta Excelencia"
   },
   "Buy": {
