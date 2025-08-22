@@ -26,7 +26,7 @@ export const flavors: Flavor[] = [
     image: "/products/berry.webp",
     color: "from-purple-400 to-purple-300",
     translationKey: "berryDelight",
-    price: 450 // Updated to match fresa price
+    price: 550 // Updated to match fresa price
   },
   {
     id: 3,
@@ -44,7 +44,7 @@ export const flavors: Flavor[] = [
     image: "/products/mango.webp",
     color: "from-yellow-400 to-orange-300",
     translationKey: "mangoBliss",
-    price: 450 // Torta Mango
+    price: 480 // Torta Mango
   },
   {
     id: 5,
@@ -53,7 +53,7 @@ export const flavors: Flavor[] = [
     image: "/products/pistache.webp",
     color: "from-green-400 to-green-300",
     translationKey: "pistachioDream",
-    price: 550 // Torta Pistachio
+    price: 650 // Torta Pistachio
   },
   {
     id: 6,
@@ -63,6 +63,15 @@ export const flavors: Flavor[] = [
     color: "from-amber-500 to-yellow-600",
     translationKey: "caramel",
     price: 450 // Torta Caramel
+  },
+  {
+    id: 7,
+    name: "Nuts",
+    description: "Rich nutty cake with mixed nuts, walnut cream, and crunchy nut toppings",
+    image: "/products/NUTS.webp",
+    color: "from-amber-600 to-amber-800",
+    translationKey: "nuts",
+    price: 650 // Torta Nuts
   }
 ];
 

@@ -44,6 +44,10 @@
     "caramel": {
       "name": "Caramel",
       "description": "Luxurious caramel cake with rich caramel sauce and buttery caramel cream"
+    },
+    "nuts": {
+      "name": "Nuts Delight",
+      "description": "Rich nutty cake with mixed nuts, walnut cream, and crunchy nut toppings"
     }
   },
   "SocialLinks": {
